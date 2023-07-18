@@ -2,7 +2,7 @@
 <h2>Objective</h2>
 Update a page in Confluence, inserting the dolar value in brazilian real.
 <h2>The page</h2>
-Below is the page to be updated. The program assumes the user is loged on Confluence.<br>
+Below is the page to be updated. The program assumes the user is logged into Confluence.<br>
 <br>
 
 ![](page_to_update.png)
