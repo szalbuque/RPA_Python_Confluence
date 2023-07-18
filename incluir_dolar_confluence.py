@@ -2,44 +2,49 @@ import requests
 import pyautogui
 import time
 
-def localiza_imagem(nome_arquivo):
-    while not pyautogui.locateOnScreen(nome_arquivo):
-        time.sleep(1)
-    posicao = pyautogui.locateOnScreen(nome_arquivo)
-    return posicao
+def find_image(filename):
+    """Finds on screen the image contained in the file filename
 
-# buscar o valor do dólar do dia
+    Args:
+        filename (string): name of the file containing the image in PNG format
+
+    Returns:
+        tuple (x,y,width,height): position and dimensions of the image in the screen
+    """
+    while not pyautogui.locateOnScreen(filename):
+        time.sleep(1)
+    return pyautogui.locateOnScreen(filename)
+
+# use an API to obtain the dolar of the day, in brazilian real
 
 link = "http://economia.awesomeapi.com.br/json/last/USD-BRL"
 
 req = requests.get(link).json()
-valor_dolar = eval(req["USDBRL"]['high'])
+dolar_value = eval(req["USDBRL"]['high'])
 
-# configurar o tempo de pausa entre cada comando do pyautogui
+# sets the default pause interval between pyautogui commands
 pyautogui.PAUSE = 1
-# entrar na página do confluence, considerar que já esteja logado
-# abrir a navegação do windows
+# opens a Chrome window
 pyautogui.press('win')
-# abrir o navegador (digitar 'chrome' e apertar 'enter')
 pyautogui.write('chrome')
 pyautogui.press('enter')
 
-# clicar na barra de endereço, escrever o endereço e clicar em 'enter
+# opens the page that will be updated
 pyautogui.write('https://szalbuque.atlassian.net/wiki/spaces/TEAM/pages/edit-v2/557092')
 pyautogui.press('enter')
 pyautogui.hotkey('f11')
 
-# localizar na tela a posição da imagem referente ao campo do valor do dólar
-x,y,largura, altura = localiza_imagem('dolar.png')
+# finds on screen the position of the image of the dolar value field
+x,y,largura, altura = find_image('dolar.png')
  
-# clicar logo após a imagem
+# clicks just after the image
 pyautogui.click(x + largura + 4 , y + altura/2)
 
-# selecionar o conteúdo para substituir
+# selects the text to be updated
 pyautogui.hotkey('shift','end')
-valor_dolar_formatado = "US$ {:2.2f}".format(valor_dolar)
-pyautogui.write(valor_dolar_formatado)
+dolar_value_formated = "R$ {:2.2f}".format(dolar_value)
+pyautogui.write(dolar_value_formated)
 
-# clicar em publicar
-x,y,largura, altura = localiza_imagem('publicar.png')
+# publish the page updated
+x,y,largura, altura = find_image('publicar.png')
 pyautogui.click(x + largura/2, y + altura/2)
