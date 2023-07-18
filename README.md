@@ -16,7 +16,7 @@ Below is the page to be updated. The program assumes the user is logged into Con
 
 <h2>Execution</h2>
 
-Below, a link to the recording of the screen while executing the program.
+Below, is a link to the screen capture while running the program.
 
 https://youtu.be/t0h4egu1j1Q
 
